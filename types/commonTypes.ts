@@ -1,6 +1,11 @@
 export interface IArticle {
-  id: string;
+  id?: string;
   title: string;
-  poster: string;
+  poster?: string;
   description: string;
+}
+
+export interface IError {
+  message: string;
+  status?: number;
 }

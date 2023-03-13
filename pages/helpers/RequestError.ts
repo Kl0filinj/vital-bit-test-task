@@ -1,3 +1,5 @@
+import { NextApiResponse } from "next";
+
 interface IstatusMessage {
   [key: number]: string;
 }
@@ -12,10 +14,9 @@ const messages: IstatusMessage = {
 };
 
 export default function RequestError(
+  response: NextApiResponse,
   status: number,
   message: string = messages[status]
 ) {
-  const error: any = new Error(message);
-  error.status = status;
-  return error;
+  return response.status(status).json({ message });
 }

@@ -1,32 +1,30 @@
-import { getUserById } from "@/pages/controllers/productsControllers";
+import { getArticleById } from "@/pages/controllers/productsControllers";
+import RequestError from "@/pages/helpers/RequestError";
+import newArticleSchema from "@/pages/helpers/validation";
+import { validatedAsyncWrapper } from "@/pages/middleware/validationMiddleware";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const { method, query } = req;
+async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { method, query, body } = req;
   const id = query.productId;
 
   switch (method) {
     case "GET":
-      try {
-        const result = await getUserById(String(id));
-        return res.status(200).json({ data: result });
-      } catch (error: any) {
-        return res.status(404).json({ message: "Not found" });
+      const article = await getArticleById(String(id));
+      if (!article) {
+        return RequestError(res, 404, "Not found");
       }
-
-    case "POST":
-      break;
+      return res.status(200).json({ data: article });
 
     case "DELETE":
       break;
 
-    case "PATCH":
+    case "PUT":
       break;
 
     default:
       break;
   }
 }
+
+export default validatedAsyncWrapper(newArticleSchema, handler);
