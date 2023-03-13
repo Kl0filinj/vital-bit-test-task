@@ -1,6 +1,6 @@
 import { IArticle } from "@/types/commonTypes";
 import { v4 as uuidv4 } from "uuid";
-import { appendFile, readFile, writeFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import { dbPath } from "../api/products";
 
 const getRandomPosterUrl = () => {
