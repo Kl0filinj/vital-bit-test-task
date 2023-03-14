@@ -43,7 +43,6 @@ const Article = ({
   const deleteHandler = async (id: string) => {
     const res = await removeArticle(id);
     deleteMethod(id);
-    console.log(res);
   };
   return (
     <LinkBox as="article">

@@ -14,7 +14,6 @@ export const getAllArticles = async (): Promise<IArticle[]> => {
 
 export const addArticle = async (article: IArticle): Promise<IArticle> => {
   const { data } = await instance.post(`products`, article);
-  console.log("LOG FROM SERVICES ", data.data);
   return data.data;
 };
 

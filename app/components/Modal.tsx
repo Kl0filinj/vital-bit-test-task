@@ -49,7 +49,6 @@ const ArticleModal = ({
       };
 
   const onSubmit = async (values: ICredentials) => {
-    console.log(values);
     const articleData = {
       title: values.title,
       description: values.description,
@@ -58,7 +57,6 @@ const ArticleModal = ({
       credentials && id
         ? await updateArticle(articleData, id)
         : await addArticle(articleData);
-    console.log("LOG FROM MODAL ", createdArticle);
     saveMethod(createdArticle);
     onClose();
   };
