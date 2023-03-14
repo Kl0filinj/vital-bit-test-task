@@ -1,9 +1,8 @@
-import { IError } from "@/types/commonTypes";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-// import { OptionalObjectSchema } from "yup/lib/object";
 import RequestError from "../helpers/RequestError";
 
 export function validatedAsyncWrapper(schema: any, handler: NextApiHandler) {
+  console.log(schema);
   return async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       if (req.method === "POST" || req.method === "PUT") {

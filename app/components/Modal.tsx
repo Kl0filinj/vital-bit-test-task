@@ -5,14 +5,12 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
-  FormHelperText,
   FormLabel,
   Input,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Textarea,
@@ -21,15 +19,17 @@ import { Field, Form, Formik } from "formik";
 import React from "react";
 import { articleYupSchema } from "../utils/validationSchemas";
 
+interface ICredentials {
+  title: string;
+  description: string;
+}
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   modalTitle: string;
   saveMethod: (article: IArticle) => void;
-  credentials?: {
-    title: string;
-    description: string;
-  };
+  credentials?: ICredentials;
   id?: string;
 }
 
@@ -48,7 +48,8 @@ const ArticleModal = ({
         description: "",
       };
 
-  const onSubmit = async (values: any) => {
+  const onSubmit = async (values: ICredentials) => {
+    console.log(values);
     const articleData = {
       title: values.title,
       description: values.description,

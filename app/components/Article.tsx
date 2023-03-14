@@ -62,9 +62,9 @@ const Article = ({
             width={300}
             height={200}
             priority={true}
-            placeholder={"empty"}
+            placeholder="empty"
             borderRadius="lg"
-            m={"auto"}
+            m="auto"
           />
           <Stack mt="6" spacing="3">
             <LinkOverlay as={Button} variant="link" onClick={onOpen}>
