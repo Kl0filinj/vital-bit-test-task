@@ -26,9 +26,10 @@ export async function addArticle(article: IArticle): Promise<IArticle> {
   const parsedResult = JSON.parse(result);
   const articleId = uuidv4();
   const articlePoster = getRandomPosterUrl();
-  parsedResult.push({ id: articleId, poster: articlePoster, ...article });
+  const createdArticle = { id: articleId, poster: articlePoster, ...article };
+  parsedResult.unshift(createdArticle);
   await writeFile(dbPath, JSON.stringify(parsedResult));
-  return article;
+  return createdArticle;
 }
 
 export async function removeArticle(id: string): Promise<string> {
@@ -42,15 +43,14 @@ export async function removeArticle(id: string): Promise<string> {
 
 export async function updateArticle(
   id: string,
-  updatedArticle: IArticle
+  article: IArticle
 ): Promise<IArticle> {
   const result = await readFile(dbPath, { encoding: "utf8" });
   const parsedResult = JSON.parse(result);
-  const index = parsedResult.findIndex((item: IArticle) => item.id === id);
-  await writeFile(
-    dbPath,
-    JSON.stringify(parsedResult.splice(index, 1, updatedArticle)),
-    "utf8"
-  );
+  const prevArticle = parsedResult.find((item: IArticle) => item.id === id);
+  const index = parsedResult.indexOf(prevArticle);
+  const updatedArticle = Object.assign(prevArticle, article);
+  parsedResult.splice(index, 1, updatedArticle);
+  await writeFile(dbPath, JSON.stringify(parsedResult), "utf8");
   return updatedArticle;
 }
